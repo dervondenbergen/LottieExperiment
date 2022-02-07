@@ -8,10 +8,37 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var isPlaying: Bool = true
+    @State var start: Bool = true
+    
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        VStack {
+            List {
+                Section(header: Text("loop")) {
+                    VStack {
+                        Toggle("Change Playstate", isOn: $isPlaying)
+                            .toggleStyle(.switch)
+                        Text("Is Playing? \(isPlaying.description)")
+                    }
+                    
+                    LottieView(name: "loader.desygner", playing: $isPlaying)
+                    
+                }
+                
+                Section(header: Text("once")) {
+                    VStack {
+                        Toggle("Start Animation", isOn: $start)
+                            .toggleStyle(.button)
+                            .disabled(start)
+                        Text("Is Playing? \(start.description)")
+                    }
+                    
+                    LottieView(name: "loader.desygner", playing: $start, loopMode: .playOnce)
+                }
+            }
+        }
     }
+    
 }
 
 struct ContentView_Previews: PreviewProvider {
